@@ -25,7 +25,7 @@ function UploadScreen() {
           borderColor: 'gray',
           borderWidth: 2,
         }}
-        defaultValue="You can type  me"
+        defaultValue="You can type gjh me"
       />
     </View>
     </View>
@@ -44,7 +44,7 @@ function RecordingScreen() {
 function InformationScreen() {
   return (
     <View>
-    <Text> dfkjdsf
+    <Text> dfkjdsf gjhgjhg
     </Text>
     </View>
   )
