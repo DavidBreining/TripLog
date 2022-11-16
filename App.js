@@ -53,7 +53,7 @@ function RecordingScreen() {
 function InformationScreen() {
   return (
     <View>
-    <Text> dfkjdsf gjhgjhg dfsdfd
+    <Text> dfkjds
     </Text>
     </View>
   )
