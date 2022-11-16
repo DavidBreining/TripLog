@@ -11,6 +11,12 @@ const gyroscope = () => {
   Gyroscope.addListener(setData)
 }
 
+const [{ x, y, z }, setData] = useState({
+  x: 0,
+  y: 0,
+  z: 0,
+});
+
 function UploadScreen() {
   return (
     <View>
@@ -37,6 +43,9 @@ function RecordingScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Gyro: {setData}</Text>
+      <Text style={styles.text}>x: {x}</Text>
+      <Text style={styles.text}>y: {y}</Text>
+      <Text style={styles.text}>z: {z}</Text>
     </View>
   );
 }
