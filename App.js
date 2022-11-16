@@ -44,7 +44,7 @@ function RecordingScreen() {
 function InformationScreen() {
   return (
     <View>
-    <Text> dfkjdsf gjhgjhg
+    <Text> dfkjdsf gjhgjhg dfsdfd
     </Text>
     </View>
   )
