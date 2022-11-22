@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -42,20 +42,54 @@ function InformationScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [{ x, y, z }, setData] = useState({
+  const [data, setData] = useState({
     x: 0,
     y: 0,
     z: 0,
   });
+  const [subscription, setSubscription] = useState(null);
 
-  function RecordingScreen() {
+  const _slow = () => Gyroscope.setUpdateInterval(1000);
+  const _fast = () => Gyroscope.setUpdateInterval(16);
+
+  const _subscribe = () => {
+    setSubscription(
+      Gyroscope.addListener(gyroscopeData => {
+        setData(gyroscopeData);
+      })
+    );
+  };
+
+  const _unsubscribe = () => {
+    subscription && subscription.remove();
+    setSubscription(null);
+  };
+
+  useEffect(() => {
+    _subscribe();
+    return () => _unsubscribe();
+  }, []);
+
+  const { x, y, z } = data;
+  const RecordingScreen = () => {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Gyro: {setData}</Text>
-        <Text style={styles.text}>x: {x}</Text>
-        <Text style={styles.text}>y: {y}</Text>
-        <Text style={styles.text}>z: {z}</Text>
+      <View style={styles.container}>
+      <Text style={styles.text}>Gyroscope:</Text>
+      <Text style={styles.text}>x: {x}</Text>
+      <Text style={styles.text}>y: {y}</Text>
+      <Text style={styles.text}>z: {z}</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
+          <Text>{subscription ? 'On' : 'Off'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
+          <Text>Slow</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_fast} style={styles.button}>
+          <Text>Fast</Text>
+        </TouchableOpacity>
       </View>
+    </View>
     );
   }
 
