@@ -34,7 +34,7 @@ function UploadScreen() {
 function InformationScreen() {
   return (
     <View>
-      <Text> dfkjds kjkj</Text>
+      <Text> dfkkjkj</Text>
     </View>
   );
 }
