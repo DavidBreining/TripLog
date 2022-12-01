@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Gyroscope } from "expo-sensors";
 
-import RNFetchBlob from 'react-native-fetch-blob';
+//import RNFetchBlob from 'react-native-fetch-blob';
 /*
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import RNLocation from 'react-native-location';
