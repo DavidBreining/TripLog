@@ -5,8 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Gyroscope } from "expo-sensors";
 
-//import RNFetchBlob from 'react-native-fetch-blob';
-/*
+import RNFetchBlob from 'react-native-fetch-blob';
+
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import RNLocation from 'react-native-location';
 
@@ -65,7 +65,7 @@ ReactNativeForegroundService.add_task(
     onError: (e) => console.log('Error logging:', e),
   },
 );
-*/
+
 
 const gyroscope = () => {
   Gyroscope.setUpdateInterval(100);
@@ -86,7 +86,7 @@ function UploadScreen() {
             borderColor: "gray",
             borderWidth: 2,
           }}
-          defaultValue="You can type gjh me"
+          defaultValue="You can type me"
         />
       </View>
     </View>
