@@ -5,8 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Gyroscope } from "expo-sensors";
 
-import RNFetchBlob from 'react-native-fetch-blob';
-
+//import RNFetchBlob from 'react-native-fetch-blob';
+ /*
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import RNLocation from 'react-native-location';
 
@@ -65,12 +65,9 @@ ReactNativeForegroundService.add_task(
     onError: (e) => console.log('Error logging:', e),
   },
 );
+*/
 
 
-const gyroscope = () => {
-  Gyroscope.setUpdateInterval(100);
-  Gyroscope.addListener(setData);
-};
 
 function UploadScreen() {
   return (
@@ -86,7 +83,7 @@ function UploadScreen() {
             borderColor: "gray",
             borderWidth: 2,
           }}
-          defaultValue="You can type me"
+          defaultValue="You can type me!"
         />
       </View>
     </View>
@@ -109,50 +106,30 @@ export default function App() {
     y: 0,
     z: 0,
   });
-  const [subscription, setSubscription] = useState(null);
 
-  const _slow = () => Gyroscope.setUpdateInterval(1000);
-  const _fast = () => Gyroscope.setUpdateInterval(16);
-
-  const _subscribe = () => {
-    setSubscription(
-      Gyroscope.addListener(gyroscopeData => {
-        setData(gyroscopeData);
-      })
-    );
-  };
-
-  const _unsubscribe = () => {
-    subscription && subscription.remove();
-    setSubscription(null);
-  };
+  const _gyroscope = () => {
+    Gyroscope.setUpdateInterval(100);
+    Gyroscope.addListener(setData);
+  };  
 
   useEffect(() => {
-    _subscribe();
-    return () => _unsubscribe();
-  }, []);
+    _gyroscope();    
+  });
+
 
   const { x, y, z } = data;
-  console.log(data);
+
+  //_gyroscope();
 
   const RecordingScreen = () => {
+    //_gyroscope();
+    console.log(data);
     return (
       <View style={styles.container}>
       <Text style={styles.text}>Gyroscope:</Text>
       <Text style={styles.text}>x: {x}</Text>
       <Text style={styles.text}>y: {y}</Text>
       <Text style={styles.text}>z: {z}</Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
-          <Text>{subscription ? 'On' : 'Off'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
-          <Text>Slow</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={_fast} style={styles.button}>
-          <Text>Fast</Text>
-        </TouchableOpacity>
-      </View>
     </View>
     );
   }
@@ -204,13 +181,6 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
-
-function round(n) {
-  if (!n) {
-    return 0;
-  }
-  return Math.floor(n * 100) / 100;
 }
 
 const styles = StyleSheet.create({
