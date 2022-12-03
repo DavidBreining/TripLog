@@ -5,7 +5,32 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Gyroscope } from "expo-sensors";
 
-//import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'react-native-fetch-blob';
+
+const values = [
+  ['build', '2017-11-05T05:40:35.515Z'],
+  ['deploy', '2017-11-05T05:42:04.810Z']
+];
+
+// construct csvString
+const headerString = 'event,timestamp\n';
+const rowString = values.map(d => `${d[0]},${d[1]}\n`).join('');
+const csvString = `${headerString}${rowString}`;
+
+console.log(csvString);
+// write the current list of answers to a local csv file
+const pathToWrite = `${RNFetchBlob.fs.dirs.DocumentDir}/data.csv`;
+console.log('pathToWrite', pathToWrite);
+// pathToWrite /storage/emulated/0/Download/data.csv
+RNFetchBlob.fs
+  .writeFile(pathToWrite, csvString, 'utf8')
+  .then(() => {
+    console.log(`wrote file ${pathToWrite}`);
+    // wrote file /storage/emulated/0/Download/data.csv
+  })
+  .catch(error => console.error(error));
+
+
  /*
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import RNLocation from 'react-native-location';
@@ -123,7 +148,7 @@ export default function App() {
 
   const RecordingScreen = () => {
     //_gyroscope();
-    console.log(data);
+    //console.log(data);
     return (
       <View style={styles.container}>
       <Text style={styles.text}>Gyroscope:</Text>
